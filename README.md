@@ -4,7 +4,7 @@ A PowerShell module to help with automation and build tasks for Microsoft Dynami
 
 ### Installing
 
-Clone repository. From PowerShell commandline in base directory
+Clone repository. From PowerShell commandline in base git directory
 
 ```
 Import-Module .\POPSCrmTools
