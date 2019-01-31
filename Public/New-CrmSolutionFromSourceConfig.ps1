@@ -1,4 +1,4 @@
-Function New-BuildCrmSolutionFromSourceConfig {
+Function New-CrmSolutionFromSourceConfig {
     Param
     (
         [Parameter(Mandatory=$true)]
