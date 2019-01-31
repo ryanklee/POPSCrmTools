@@ -1,4 +1,4 @@
-Function Build-CrmSolutionFromSource {
+Function New-CrmSolutionFromSource {
     [cmdletbinding()]
     Param 
     (
