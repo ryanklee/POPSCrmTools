@@ -26,8 +26,11 @@ Function New-CrmSolutionFromSource {
     } else {
         $sourceConn = Get-CrmConnection -Cred $credential -Url "https://$sourceOrg.crm.dynamics.com" 
         $targetConn = Get-CrmConnection -Cred $credential -Url "https://$targetOrg.crm.dynamics.com"
-    }     
-        
+    }
+
+    $sourceSolutionExists = Test-CrmSolutionExists -Conn $sourceConn -SolutionName $solutionName
+	$targetSolutionExists = Test-CrmSolutionExists -Conn $targetConn -SolutionName $solutionName    
+    
     if (-Not $sourceSolutionExists) {
         $err = "Source solution does not exist"
         $err | Out-File -Append 'errorlog.txt'
