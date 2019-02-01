@@ -1,7 +1,7 @@
 Function Compare-ComponentsWithTargetOrg {
     Param
     (
-        [SolutionComponent[]]$Components,
+        [SolutionComponent[]]$Component,
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
     )
 
@@ -14,8 +14,8 @@ Function Compare-ComponentsWithTargetOrg {
     $validEntities = $entities | 
         Where-Object -Filter {($_.rootcomponentbehavior -ne 0)} |
         Where-Object -Filter {(Test-CrmComponentExists $_.objectid $conn)}
+    
         
-
     Write-Verbose "Identifying invalid entities..."
     if ($validEntities) {
         $invalidEntities = Compare-Object $validEntities $entities |
@@ -24,6 +24,7 @@ Function Compare-ComponentsWithTargetOrg {
     } else {
         $invalidEntities = $entities
     }
+    $badRootComponents = $entities | Where-Object -Property rootcomponentbehavior -EQ 0 
 
     $invalidEntitiesIds = $invalidEntities | Select-Object -ExpandProperty ObjectId
     $invalidAttributeIds = $()
@@ -57,7 +58,8 @@ Function Compare-ComponentsWithTargetOrg {
     [SolutionComponent[]]$add["Entities"] = $validEntities  
     [SolutionComponent[]]$add["Nonentities"] = $validNonentities
     [SolutionComponent[]]$skip["Entities"] = $invalidEntities
-    [SolutionComponent[]]$skip["Nonentities"] = $invalidNonentities   
+    [SolutionComponent[]]$skip["Nonentities"] = $invalidNonentities
+    [SolutionCOmponent[]]$skip["BadBehavior"] = $badRootComponents   
     
     $manifest["Add"] = $add
     $manifest["Skip"] = $skip

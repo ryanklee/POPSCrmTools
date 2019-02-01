@@ -17,7 +17,6 @@ Function New-CrmSolutionFromSource {
     $solutionName = $config.SolutionName
     $publisher  = $config.Publisher
     $components = @{}
-    New-Item -ItemType Directory -Name log 
     $log = @{}
     
     if ($PSBoundParameters.ContainsKey('Password')){
@@ -52,9 +51,9 @@ Function New-CrmSolutionFromSource {
     }
     
     if ($components.SourceOnly) { 
-        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Components $components.SourceOnly -Conn $targetConn
+        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.SourceOnly -Conn $targetConn
     } else {
-        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Components $components.Source -Conn $targetConn
+        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.Source -Conn $targetConn
     }
     
     Write-ManifestOut -Manifest $components.Manifest

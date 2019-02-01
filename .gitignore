@@ -1,3 +1,5 @@
 .vscode/launch.json
 .vscode/settings.json
 Refresh.ps1
+BuildCrmSolutionLog.json
+CrmSolutionFromSourceConfig.psd1
