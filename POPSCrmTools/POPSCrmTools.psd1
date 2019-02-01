@@ -21,7 +21,7 @@ ModuleVersion = '0.0.3'
 GUID = 'ffb9ef5c-e030-4fd1-9038-670eaa61ffa3'
 
 # Author of this module
-Author = 'Ryan.Kleeberger'
+Author = 'Ryan Kleeberger'
 
 # Company or vendor of this module
 CompanyName = 'PowerObjects'
