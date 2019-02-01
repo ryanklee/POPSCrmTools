@@ -25,7 +25,7 @@ Function Add-ComponentToSolution {
                 Default { 
                     $err = $("Invalid behavior value {0} identified for component {1}" -f $component.rootcomponentbehavior, $component.ObjectId);
                     Write-Error -Message $err
-                    $err | Out-File -Append 'errorlog.txt'
+                    $err | Out-File -Append 'log\errorlog.txt'
                 }
             }
         }
@@ -47,7 +47,7 @@ Function Add-ComponentToSolution {
         }
         catch {
             $err = $_.Exception.Message
-            $err | Out-File -Append 'errolog.txt'
+            $err | Out-File -Append 'errorlog.txt'
             Throw $err
         }
     }

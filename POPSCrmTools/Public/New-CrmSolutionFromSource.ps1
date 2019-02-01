@@ -17,8 +17,8 @@ Function New-CrmSolutionFromSource {
     $solutionName = $config.SolutionName
     $publisher  = $config.Publisher
     $components = @{}
+    New-Item -ItemType Directory -Name log 
     $log = @{}
-    
     
     if ($PSBoundParameters.ContainsKey('Password')){
         $sourceConn = Get-CrmConnection -UserName $UserName -Password $Password -Url "https://$sourceOrg.crm.dynamics.com" 
@@ -80,6 +80,11 @@ Function New-CrmSolutionFromSource {
     $log["Config"] = $config
     $log["Components"] = $components
     ConvertTo-Json -InputObject $log -Depth 10 | Out-File -FilePath "BuildCrmSolutionLog.json"
-    if (Test-Path 'errorlog.txt') {Write-Verbose 'Errors logged in errorlog.txt'}
+    Write-Verbose "Log file saved as BuildSolutionLog.json"
+    if (Test-Path 'log\errorlog.txt') {
+        Write-Verbose 'Errors logged in errorlog.txt'
+    } else {
+        Write-Verbose 'No errors logged.'
+    }
 }
 
