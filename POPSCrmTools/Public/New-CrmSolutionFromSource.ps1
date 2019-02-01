@@ -48,7 +48,7 @@ Function New-CrmSolutionFromSource {
     if ($components.Source -and
         $components.Target) {
         [SolutionComponent[]]$components["SourceOnly"] = Get-CrmSolutionComponentComparison -ReferenceComponent $components.Source -DifferenceComponent $components.Target
-        [SolutionComponent[]]$components["TargetOnly"] = Get-CrmSolutionCOmponentComparison -ReferenceComponent $components.Target -DifferenceComponent $components.Source
+        [SolutionComponent[]]$components["TargetOnly"] = Get-CrmSolutionComponentComparison -ReferenceComponent $components.Target -DifferenceComponent $components.Source
     }
     
     if ($components.SourceOnly) { 
