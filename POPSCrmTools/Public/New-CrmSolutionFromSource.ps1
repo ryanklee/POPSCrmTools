@@ -79,7 +79,7 @@ Function New-CrmSolutionFromSource {
     $log["Timestamp"] = (Get-Date -Format o)
     $log["Config"] = $config
     $log["Components"] = $components
-    ConvertTo-Json -InputObject $log -Depth 10 | Out-File -FilePath "SyncCrmSolutionLog.json"
+    ConvertTo-Json -InputObject $log -Depth 10 | Out-File -FilePath "BuildCrmSolutionLog.json"
     if (Test-Path 'errorlog.txt') {Write-Verbose 'Errors logged in errorlog.txt'}
 }
 
