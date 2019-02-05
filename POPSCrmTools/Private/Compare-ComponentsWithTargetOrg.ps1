@@ -7,36 +7,20 @@ Function Compare-ComponentsWithTargetOrg {
 
     Write-Verbose 'Getting source crm metadata...'
     $metadata = Get-CrmEntityAllMetadata -conn $sourceConn -EntityFilters Attributes | MetadataToHash
-    $entities = $Component | Where-Object -Property ComponentType -EQ 1
-    $nonentities = $Component | Where-Object -Property ComponentType -NE 1
 
-    Write-Verbose "Identifying valid entities..."
-    $validEntities = $entities | 
-        Where-Object -Filter {($_.rootcomponentbehavior -ne 0)} |
-        Where-Object -Filter {(Test-CrmComponentExists $_.objectid $conn)}
+    $entities = @{}
+    $nonentities = @{}
     
-        
-    Write-Verbose "Identifying invalid entities..."
-    if ($validEntities) {
-        $invalidEntities = Compare-Object $validEntities $entities |
-        Where-Object SideIndicator -eq '=>' |
-        ForEach-Object InputObject   
-    } else {
-        $invalidEntities = $entities
-    }
-    $badRootComponents = $entities | Where-Object -Property rootcomponentbehavior -EQ 0 
+    [SolutionComponent[]]$entities["All"] = $Component | Where-Object -Property ComponentType -EQ 1
+    [SolutionComponent[]]$nonentities["All"] = $Component | Where-Object -Property ComponentType -NE 1
+    $entities["Exist"] = Get-ComponentSortedOnExistence -Component $entities.All -Conn $conn
+    [SolutionComponent[]]$entities["Valid"] = Get-ValidEntityComponent -AllEntityComponent $entities.All -ExistingComponent $entities.Exist.True  
+    [SolutionComponent[]]$entities["Invalid"] = Get-InvalidComponent -AllEntityComponent $entities.All -ValidComponent $entites.Valid
 
-    $invalidEntitiesIds = $invalidEntities | Select-Object -ExpandProperty ObjectId
-    $invalidAttributeIds = $()
-    
-    foreach ($id in $invalidEntitiesIds){
-        [guid[]]$attributeIds = $Metadata[$id].Attributes | 
-            Select-Object -ExpandProperty Metadataid
-        [guid[]]$invalidAttributeIds += $attributeIds
-    }
+    [guid[]]$invalidAttributeIds = Get-ComponentAttributeId -Component $entities.Invalid -Metadata $metadata 
 
     Write-Verbose "Identifying valid Nonentities..."
-    $validNonentitiesGoodIds = $nonentities | 
+    $validNonentitiesGoodIds = $nonentities.All | 
         Where-Object -Filter {($invalidAttributeIds -notcontains $_.ObjectId)} 
     
     $validNonentities = $validNonentitiesGoodIds |
@@ -44,22 +28,21 @@ Function Compare-ComponentsWithTargetOrg {
 
     Write-Verbose "Identifying invalid Nonentities..."
     if($validNonentities){
-        $invalidNonentities = Compare-Object $validNonentities $nonentities |
+        $invalidNonentities = Compare-Object $validNonentities $nonentities.All |
         Where-Object SideIndicator -eq '=>' |
         ForEach-Object InputObject   
     } else {
-        $invalidNonentities = $nonentities
+        $invalidNonentities = $nonentities.All
     }
 
     $manifest = @{}
     $add = @{}
     $skip = @{}
     
-    [SolutionComponent[]]$add["Entities"] = $validEntities  
+    [SolutionComponent[]]$add["Entities"] = $entities.Valid 
     [SolutionComponent[]]$add["Nonentities"] = $validNonentities
-    [SolutionComponent[]]$skip["Entities"] = $invalidEntities
+    [SolutionComponent[]]$skip["Entities"] = $entities.Invalid
     [SolutionComponent[]]$skip["Nonentities"] = $invalidNonentities
-    [SolutionCOmponent[]]$skip["BadBehavior"] = $badRootComponents   
     
     $manifest["Add"] = $add
     $manifest["Skip"] = $skip

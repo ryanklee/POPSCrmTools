@@ -10,6 +10,8 @@ Function New-CrmSolutionFromSourceConfig {
         [Parameter(Mandatory=$true)]
         [string]$SolutionName,
         [Parameter(Mandatory=$true)]
+        [bool]$FixRootComponentBehavior,
+        [Parameter(Mandatory=$true)]
         [string]$PubName,
         [Parameter(Mandatory=$true)]
         [string]$PubDisplayName,
@@ -22,6 +24,7 @@ Function New-CrmSolutionFromSourceConfig {
     SourceOrg = '$SourceOrg'
     TargetOrg = '$TargetOrg'
     SolutionName = '$SolutionName'
+    FixRootComponentBehavior = '$FixRootComponentBehavior'
     Publisher = @{
         Name = '$PubName'
         DisplayName = '$PubDisplayName'

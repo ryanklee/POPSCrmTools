@@ -8,14 +8,29 @@ Function New-CrmSolutionFromSource {
         [string]$UserName,
         [Parameter(ParameterSetName='DiscreteCreds', Mandatory=$true)]
         [securestring]$Password,
-        [string]$ConfigFilePath
+        [Parameter(Mandatory=$true)]
+        [string]$ConfigFilePath,
+        [bool]$GenerateConfig = $false
     )
-        
-    $config = Import-PowerShellDataFile $PWD/$ConfigFilePath
-    $sourceOrg = $config.SourceOrg  
-    $targetOrg = $config.TargetOrg
-    $solutionName = $config.SolutionName
-    $publisher  = $config.Publisher
+    
+    if ($GenerateConfig){
+        New-CrmSolutionFromSourceConfig -FileName $ConfigFilePath
+    }
+
+    try {
+        $config = Import-PowerShellDataFile $PWD/$ConfigFilePath
+    } catch {
+        $err = $_.Exception.Message
+        $err | Out-File errorlog.txt -Append
+        throw $err
+    }
+
+    $sourceOrg                  = $config.SourceOrg  
+    $targetOrg                  = $config.TargetOrg
+    $fixRootComponentBehavior   = $config.FixRootComponentBehavior
+    $solutionName               = $config.SolutionName
+    $publisher                  = $config.Publisher
+    
     $components = @{}
     $log = @{}
     
@@ -26,7 +41,7 @@ Function New-CrmSolutionFromSource {
         $sourceConn = Get-CrmConnection -Cred $credential -Url "https://$sourceOrg.crm.dynamics.com" 
         $targetConn = Get-CrmConnection -Cred $credential -Url "https://$targetOrg.crm.dynamics.com"
     }
-
+    
     $sourceSolutionExists = Test-CrmSolutionExists -Conn $sourceConn -SolutionName $solutionName
 	$targetSolutionExists = Test-CrmSolutionExists -Conn $targetConn -SolutionName $solutionName    
     
@@ -40,6 +55,11 @@ Function New-CrmSolutionFromSource {
         New-CrmTemplateSolution -SolutionName $solutionName -Publisher $publisher -Conn $targetConn
         $log["TemplateCreaded"] = $true 
     }   
+
+    if ($fixRootComponentBehavior){
+        [SolutionComponent[]]$components["PreUpdateSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
+        $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn
+    }
 
     [SolutionComponent[]]$components["Source"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
     [SolutionComponent[]]$components["Target"] = Get-CrmSolutionComponent -Conn $targetConn -SolutionName $solutionName
@@ -61,27 +81,14 @@ Function New-CrmSolutionFromSource {
     if ($components.Manifest.Add) {
         Add-Component -Conn $targetConn -Component $components.Manifest.Add -SolutionName $solutionName
     }
-
-    Write-Verbose 'Post-Run Cleanup...'
-    [SolutionComponent[]]$components["PostRunSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
-    [SolutionComponent[]]$components["PostRunTarget"] = Get-CrmSolutionComponent -Conn $targetConn -SolutionName $solutionName
-
-    if ($components.PostRunTarget -and
-        $components.PostRunSource){
-        [SolutionComponent[]]$components["PostRunTargetOnly"] = Get-CrmSolutionComponentComparison -ReferenceComponent $components.PostRunTarget -DifferenceComponent $components.PostRunSource
-    }
-
-    if ($components.PostRunTargetOnly) {
-        $components["PostRunRemovals"] = Remove-Components -Component $components.PostRunTargetOnly -Conn $targetConn -SolutionName $solutionName
-    } 
     
     $log["Timestamp"] = (Get-Date -Format o)
     $log["Config"] = $config
     $log["Components"] = $components
     ConvertTo-Json -InputObject $log -Depth 10 | Out-File -FilePath "BuildCrmSolutionLog.json"
-    Write-Verbose "Log file saved as BuildSolutionLog.json"
-    if (Test-Path 'log\errorlog.txt') {
-        Write-Verbose 'Errors logged in errorlog.txt'
+    Write-Verbose "Data log saved to BuildSolutionLog.json"
+    if (Test-Path 'errorlog.txt') {
+        Write-Verbose 'Errors logged to errorlog.txt'
     } else {
         Write-Verbose 'No errors logged.'
     }
