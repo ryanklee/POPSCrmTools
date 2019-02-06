@@ -1,4 +1,5 @@
 Function Test-CrmComponentExists { 
+    [cmdletbinding()]
     Param
     (
         [parameter(Position = 0)]

@@ -1,4 +1,5 @@
 Function Set-SolutionComponent {
+    [cmdletbinding()]
     Param
     (
         [PSCustomObject]$Record

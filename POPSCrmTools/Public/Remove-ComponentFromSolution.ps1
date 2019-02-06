@@ -1,4 +1,5 @@
 Function Remove-ComponentFromSolution {
+    [cmdletbinding()]
     Param
     (
         [string]$SolutionName,

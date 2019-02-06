@@ -1,5 +1,5 @@
 Function Get-CrmSolutionComponentComparison {
-    
+    [cmdletbinding()]
     Param
     (
         [SolutionComponent[]]$ReferenceComponent,

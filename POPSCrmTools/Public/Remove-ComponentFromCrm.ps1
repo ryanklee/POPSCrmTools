@@ -1,4 +1,5 @@
 Function Remove-ComponentFromCrm {
+    [cmdletbinding()]
     Param
     (
         [array]$ObjectId,

@@ -1,4 +1,5 @@
 Function Get-CrmSolutionComponent {
+    [cmdletbinding()]
     Param
     (
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn,

@@ -1,4 +1,5 @@
 Function Add-ComponentToSolution {
+    [cmdletbinding()]
     Param
     (
         [SolutionComponent[]]$Component,

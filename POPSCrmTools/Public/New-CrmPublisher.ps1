@@ -1,4 +1,5 @@
 Function New-CrmPublisher {
+    [cmdletbinding()]
     Param
     (
         [hashtable]$Publisher,

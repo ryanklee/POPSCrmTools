@@ -1,4 +1,5 @@
 Function Test-CrmSolutionExists {
+    [cmdletbinding()]
     Param
     (
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn,

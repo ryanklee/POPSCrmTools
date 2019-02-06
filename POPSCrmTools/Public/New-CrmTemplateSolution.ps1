@@ -1,5 +1,5 @@
-
 Function New-CrmTemplateSolution {
+    [cmdletbinding()]
     Param 
     (
         [string]$SolutionName,
