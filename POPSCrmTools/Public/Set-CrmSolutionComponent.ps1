@@ -11,7 +11,7 @@ Function Set-CrmSolutionComponent {
             Object of type SolutionComponent.
         
         .EXAMPLE
-            Set-SolutionComponent -Record $crmrecord
+            Set-CrmSolutionComponent -Record $crmrecord
     #>
     [cmdletbinding()]
     Param
