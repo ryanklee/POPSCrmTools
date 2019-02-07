@@ -10,7 +10,7 @@ Function Get-ComponentSortedOnExistence {
     [SolutionComponent[]]$existing = @();
     [SolutionComponent[]]$nonexisting = @()
     foreach ($component in $Component){
-        if (Test-CrmComponentExists $component.ObjectId $Conn){
+        if (Test-CrmSolutionComponentExists $component.ObjectId $Conn){
             $existing += $component
         } else {
             $nonexisting += $component
