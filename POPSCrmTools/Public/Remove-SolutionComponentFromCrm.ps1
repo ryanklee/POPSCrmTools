@@ -1,8 +1,17 @@
 Function Remove-SolutionComponentFromCrm {
+    <#
+        .SYNOPSIS
+            Deletes SolutionComponents from a Dynamics Crm org.
+
+        .EXAMPLE
+            Remove-SolutionComponentFromCrm -Object
+    #>
     [cmdletbinding()]
     Param
     (
+        # ObjectIds of SolutionComponents to delete.
         [array]$ObjectId,
+        # Dynamics Crm org connection that contains the SolutionComponent(s)
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
     )
 
