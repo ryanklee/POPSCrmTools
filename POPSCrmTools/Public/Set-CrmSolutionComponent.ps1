@@ -9,9 +9,6 @@ Function Set-CrmSolutionComponent {
 
         .OUTPUTS
             Object of type SolutionComponent.
-        
-        .EXAMPLE
-            Set-CrmSolutionComponent -Record $crmrecord
     #>
     [cmdletbinding()]
     Param

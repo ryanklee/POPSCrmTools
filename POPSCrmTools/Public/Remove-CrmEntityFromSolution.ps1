@@ -1,10 +1,17 @@
 Function Remove-CrmEntityFromSolution {
+    <#
+        .SYNOPSIS
+            Deletes Entity from a Dynamics crm solution.
+    #>
     [cmdletbinding()]
     Param
     (
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient] $Conn,
-        [String]                                           $EntityName,
-        [String]                                           $SolutionName
+        # Dynamics crm connection
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn,
+        # LogicalName of Entity to remove
+        [String]$EntityName,
+        # Name of solution that contains entity to delete
+        [String]$SolutionName
     )
 
     $EntityMetadataId = Get-CrmEntityMetadata -Conn $Conn -EntityLogicalName $EntityName -EntityFilters None | Select-Object -ExpandProperty MetadataId;

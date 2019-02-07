@@ -5,9 +5,6 @@ Function Test-CrmSolutionComponentExists {
 
         .OUTPUTS
             'True' if the SolutionComponent exists. 'False' if the SolutionComponent does not exist.
-        
-        .EXAMPLE
-            Test-CrmSolutionComponentExists -Conn $conn -ObjectId $guid
     #>
     [cmdletbinding()]
     Param

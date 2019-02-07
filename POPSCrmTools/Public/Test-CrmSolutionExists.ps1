@@ -5,9 +5,6 @@ Function Test-CrmSolutionExists {
 
         .OUTPUTS
             'True' if the solution exists. 'False' if the solution does not exist.
-        
-        .EXAMPLE
-            Test-CrmSolutionExists -Conn $conn -SolutionName Your_Solution
     #>
     [cmdletbinding()]
     Param
