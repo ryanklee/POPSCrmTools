@@ -1,4 +1,4 @@
-Function Set-SolutionComponent {
+Function Set-CrmSolutionComponent {
     <#
         .SYNOPSIS
             Builds a SolutionComponent object from a single fetch record entry.

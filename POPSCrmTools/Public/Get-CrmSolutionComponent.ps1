@@ -30,7 +30,7 @@ Function Get-CrmSolutionComponent {
     }
     [SolutionComponent[]]$components = @()
     foreach ($record in $result.CrmRecords){
-        $Components += (Set-SolutionComponent -Record $record)
+        $Components += (Set-CrmSolutionComponent -Record $record)
     }
     Write-Output $Components  
 }
