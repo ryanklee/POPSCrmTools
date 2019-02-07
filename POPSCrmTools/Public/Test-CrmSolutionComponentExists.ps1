@@ -1,7 +1,7 @@
 Function Test-CrmSolutionComponentExists { 
     <#
         .SYNOPSIS
-            Tests whether a SolutionComponent exists in a solution on a Dynamics Crm Org.
+            Tests whether a SolutionComponent exists in any solution on a Dynamics Crm Org. Includes default solution.
 
         .OUTPUTS
             'True' if the SolutionComponent exists. 'False' if the SolutionComponent does not exist.
@@ -15,7 +15,7 @@ Function Test-CrmSolutionComponentExists {
         # ObjectId of SolutionComponent
         [parameter(Position = 0)]
         [guid]$ObjectId,
-        # Unique Name of Solution
+        # Dynamics 365 Crm Connection
         [parameter(Position = 1)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn
     )
