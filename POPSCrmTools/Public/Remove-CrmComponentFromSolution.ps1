@@ -1,4 +1,4 @@
-Function Remove-ComponentFromSolution {
+Function Remove-CrmComponentFromSolution {
     [cmdletbinding()]
     Param
     (

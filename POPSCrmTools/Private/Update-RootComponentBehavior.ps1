@@ -15,7 +15,7 @@ Function Update-RootComponentBehavior {
     Foreach ($component in $badRootComponents){
         Write-Verbose ('Updating component behavior for {0}' -f $component.ObjectId)
         $entityName = $metadata[$component.ObjectId].LogicalName
-        Remove-EntityFromSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
+        Remove-CrmEntityFromSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
         Add-EntityToSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
         $updatedRootComponents += $Component
     }

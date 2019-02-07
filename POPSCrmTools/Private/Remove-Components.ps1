@@ -11,7 +11,7 @@ Function Remove-Components{
     $removal = @{}
 
     if ($remove) {
-        Remove-ComponentFromSolution -Component $remove -SolutionName $solutionName -Conn $conn
+        Remove-CrmComponentFromSolution -Component $remove -SolutionName $solutionName -Conn $conn
         $removal["Removed"] = $remove
     }
 
