@@ -8,8 +8,7 @@ Function Get-CrmSolutionComponentComparison {
         # properties.
 
         .OUTPUTS
-        # Array of containing objects of type SolutionComponent. Objects include SideIndicator properties from 
-        # being processed by Compare-Object
+        # Array containing objects of type SolutionComponent. Objects include SideIndicator properties added by Compare-Object
     #>
     [cmdletbinding()]
     Param
