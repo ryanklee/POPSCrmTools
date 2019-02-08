@@ -14,7 +14,9 @@ Function Get-CrmSolutionComponentComparison {
     [cmdletbinding()]
     Param
     (
+        # Equivalent to Compare-Object ReferenceObject
         [SolutionComponent[]]$ReferenceComponent,
+        # Equivalent to Compare-Object DifferenceObject
         [SolutionComponent[]]$DifferenceComponent
     )
 
