@@ -1,4 +1,4 @@
-Function New-CrmTemplateSolution {
+Function New-CrmSolution {
     [cmdletbinding()]
     Param 
     (

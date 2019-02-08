@@ -52,7 +52,7 @@ Function New-CrmSolutionFromSource {
     }    
     
     if (-Not $targetSolutionExists) {
-        New-CrmTemplateSolution -SolutionName $solutionName -Publisher $publisher -Conn $targetConn
+        New-CrmSolution -SolutionName $solutionName -Publisher $publisher -Conn $targetConn
         $log["TemplateCreaded"] = $true 
     }   
 
