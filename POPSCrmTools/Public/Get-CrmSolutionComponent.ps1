@@ -23,8 +23,6 @@ Function Get-CrmSolutionComponent {
         </fetch>
 "@
 
-    $orgName = $conn.ConnectedOrgUniqueName
-
     try {
         Write-Verbose ("Getting components from {0} on {1}..." -f $solutionName, $conn.ConnectedOrgUniqueName)
         $result = Get-CrmRecordsByFetch -Conn $conn -Fetch $query -AllRows -ErrorAction Stop -WarningAction SilentlyContinue
