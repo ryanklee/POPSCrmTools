@@ -7,7 +7,7 @@ Function New-CrmPublisher {
     Param
     (
         # Publisher record info
-        # Requires entries: 'uniquename', 'friendlyname', 'customizationprefix'
+        # Required entries: 'uniquename', 'friendlyname', 'customizationprefix'
         [hashtable]$Publisher,
         # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn
