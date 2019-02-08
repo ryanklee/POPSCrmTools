@@ -9,7 +9,7 @@ Function New-CrmSolution {
         # UniqueName of solution
         [string]$SolutionName,
         # Publisher info
-        # Requires @{'uniquename' = ''; 'friendlyname' = ''; 'publisherid' = ''; 'version' = ''}
+        # Requires entries: 'uniquename', 'friendlyname', 'publisherid', 'version'
         [hashtable]$Publisher,
         # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
