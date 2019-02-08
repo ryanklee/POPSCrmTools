@@ -1,14 +1,25 @@
 Function Add-EntityToSolution {
+    <#
+        .SYNOPSIS
+            Adds an Entity to a Dynamics Crm Solution.
+    #>
     [cmdletbinding()]
     Param
-    (
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient] $Conn,
-        [String]                                           $EntityName,
-        [String]                                           $SolutionName,
-        [Switch]                                           $IncludeMetadata = $false,
-        [ValidateSet("None","All","Custom")][String]       $IncludeSubComponentSet = "None"
+    (   
+        # Dynamics Crm connection.
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn,
+        # LogicalName of Entity
+        [String]$EntityName,
+        # UniqueName of Solution
+        [String]$SolutionName,
+        # Include Entity Metadata. Default is false.
+        [Switch]$IncludeMetadata = $false
+        # SubComponents to include 
+        # [ValidateSet("None","All","Custom")]
+        # [String]$IncludeSubComponentSet = "None"
     )
 
+    $IncludeSubComponentSet = "None"
     $Metadata = (Get-CrmEntityMetadata -EntityLogicalName $EntityName -conn $Conn -EntityFilters Attributes);
     $ObjectTypeCode = $Metadata.ObjectTypeCode;
     $EntityMetadataId = $Metadata.MetadataId;
