@@ -10,7 +10,7 @@ Function New-CrmSolutionFromSource {
         [securestring]$Password,
         [Parameter(Mandatory=$true)]
         [string]$ConfigFilePath,
-        [bool]$GenerateConfig = $false
+        [switch]$GenerateConfig = $false
     )
     
     if ($GenerateConfig){
