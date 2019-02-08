@@ -1,8 +1,15 @@
 Function New-CrmPublisher {
+    <#
+        .SYNOPSIS
+            Creates a new Publisher record on a Dynamics crm org.
+    #>
     [cmdletbinding()]
     Param
     (
+        # Publisher record info
+        # Requires entries: 'uniquename', 'friendlyname', 'customizationprefix'
         [hashtable]$Publisher,
+        # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn
     )
 
