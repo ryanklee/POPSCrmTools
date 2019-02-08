@@ -51,15 +51,6 @@ changed to 1.
 This effectively Syncs the two solutions, cleaning 'rogue' SolutionComponents from
 the target org.
 
-## EXAMPLES
-
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
-```
-
-{{ Add example description here }}
-
 ## PARAMETERS
 
 ### -Credential
@@ -141,14 +132,9 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
-## INPUTS
-
 ## OUTPUTS
 
 ### -Solution on target Dynamics Crm Org.
 ### -'Errorlog.txt', if errors encountered.
 ### -'BuildCrmSolutionLog.json', contains useful information about SolutionComponents
 ###  manipulated by the cmdlet. This includes those Added, Skipped, and comparison results.
-## NOTES
-
-## RELATED LINKS

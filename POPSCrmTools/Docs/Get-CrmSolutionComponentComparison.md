@@ -22,15 +22,6 @@ Get-CrmSolutionComponentComparison [[-ReferenceComponent] <SolutionComponent[]>]
 Compares only on the ObjectId and RootComponentBehavior
 # properties.
 
-## EXAMPLES
-
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
-```
-
-{{ Add example description here }}
-
 ## PARAMETERS
 
 ### -ReferenceComponent
@@ -67,12 +58,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
-## INPUTS
-
 ## OUTPUTS
 
-### # Array of containing objects of type SolutionComponent. Objects include SideIndicator properties from 
-### # being processed by Compare-Object
-## NOTES
-
-## RELATED LINKS
+### -Array of objects of type SolutionComponent. Objects include SideIndicator properties added by Compare-Object
