@@ -1,4 +1,33 @@
 Function New-CrmSolutionFromSource {
+    <#
+        .SYNOPSIS
+            Builds a Solution in a Dynamics Crm org based on a source solution
+            in another org.
+    
+        .DESCRIPTION
+            Builds a Solution in a Dynamics Crm org based on a source solution
+            in another org.
+
+            Necessary parameters read from config file. File can be generated
+            using the '-GenerateConfig' switch -- this will prompt you for 
+            the required paramatere -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
+
+            WARNING: If the target Solution exists and contains SolutionComponents, any
+            SolutionComponents not in source Solution will either (a) be removed from
+            the target Solution if they exist in other Solutions on the target org, or
+            (b) deleted if they exist in target solution only and nowhere else.
+
+            This effectively Syncs the two solutions, cleaning 'rogue' SolutionComponents from
+            the target org.
+
+        .OUTPUTS
+            -Solution on target Dynamics Crm Org.
+
+            -'Errorlog.txt', if errors encountered.
+
+            -'BuildCrmSolutionLog.json', contains useful information about SolutionComponents
+             manipulated by the cmdlet. This includes those Added, Skipped, and comparison results.
+    #>
     [cmdletbinding()]
     Param 
     (
