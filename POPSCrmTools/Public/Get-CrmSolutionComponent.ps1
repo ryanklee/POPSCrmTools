@@ -1,8 +1,14 @@
 Function Get-CrmSolutionComponent {
+    <#
+        .SYNOPSIS
+            Gets all SolutionComponents in a Solution on a Dynamics crm org
+    #>
     [cmdletbinding()]
     Param
     (
+        # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn,
+        # UniqueName of Solution
         [string]$solutionName
     )
 
