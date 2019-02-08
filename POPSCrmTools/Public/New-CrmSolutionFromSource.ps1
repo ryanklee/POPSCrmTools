@@ -12,10 +12,17 @@ Function New-CrmSolutionFromSource {
             using the '-GenerateConfig' switch -- this will prompt you for 
             the required paramatere -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
 
+            If Solution does not already exist on target, it will be created. If publisher
+            does not already exist on target, it will be created. All publisher info and 
+            solution name are assumed to be the same on source and target.
+
             WARNING: If the target Solution exists and contains SolutionComponents, any
             SolutionComponents not in source Solution will either (a) be removed from
             the target Solution if they exist in other Solutions on the target org, or
             (b) deleted if they exist in target solution only and nowhere else.
+
+            If specified in config, entities with rootcomponentbehaviors of 0 will be
+            changed to 1.
 
             This effectively Syncs the two solutions, cleaning 'rogue' SolutionComponents from
             the target org.
