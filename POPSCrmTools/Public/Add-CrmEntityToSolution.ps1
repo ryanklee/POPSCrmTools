@@ -1,4 +1,4 @@
-Function Add-EntityToSolution {
+Function Add-CrmEntityToSolution {
     <#
         .SYNOPSIS
             Adds an Entity to a Dynamics Crm Solution.
