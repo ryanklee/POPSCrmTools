@@ -27,7 +27,7 @@ Function New-CrmSolutionFromSourceConfig {
         [string]$SolutionName,
         # Change any rootcomponentbehaviors of 0 to 1. Default is False.
         [Parameter(Mandatory=$true)]
-        [switch]$FixRootComponentBehavior = $false,
+        [bool]$FixRootComponentBehavior,
         # UniqueName of Publisher
         [Parameter(Mandatory=$true)]
         [string]$PubName,
