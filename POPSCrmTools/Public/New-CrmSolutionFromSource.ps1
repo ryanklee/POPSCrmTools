@@ -10,7 +10,7 @@ Function New-CrmSolutionFromSource {
 
             Necessary parameters read from config file. File can be generated
             using the '-GenerateConfig' switch -- this will prompt you for 
-            the required paramatere -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
+            the required paramaters -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
 
             If Solution does not already exist on target, it will be created. If publisher
             does not already exist on target, it will be created. All publisher info and 
