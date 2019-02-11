@@ -16,9 +16,6 @@ Tests whether a solution exists on a Dynamics Crm Org.
 Test-CrmSolutionExists [[-Conn] <CrmServiceClient>] [[-SolutionName] <String>] [<CommonParameters>]
 ```
 
-## DESCRIPTION
-{{Fill in the Description}}
-
 ## PARAMETERS
 
 ### -Conn
@@ -55,8 +52,6 @@ Accept wildcard characters: False
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
-## INPUTS
-
 ## OUTPUTS
 
-### 'True' if the solution exists. 'False' if the solution does not exist.
+### 'True' if the solution exists; 'False' if the solution does not exist.

@@ -26,19 +26,16 @@ New-CrmSolutionFromSource -UserName <String> -Password <SecureString> -ConfigFil
 ```
 
 ## DESCRIPTION
-Builds a Solution in a Dynamics Crm org based on a source solution
-in another org.
+Builds a Solution in a Dynamics Crm org based on a source solution in another org.
 
 Necessary parameters read from config file.
-File can be generated
-using the '-GenerateConfig' switch -- this will prompt you for 
+
+File can be generated using the '-GenerateConfig' switch -- this will prompt you for 
 the required paramaters -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
 
-If Solution does not already exist on target, it will be created.
-If publisher
-does not already exist on target, it will be created.
-All publisher info and 
-solution name are assumed to be the same on source and target.
+If Solution does not already exist on target, it will be created. If Publisher does not 
+exist on target, it will be created. All publisher info and solution name are assumed to 
+be the same on source and target.
 
 WARNING: If the target Solution exists and contains SolutionComponents, any
 SolutionComponents not in source Solution will either (a) be removed from
@@ -46,10 +43,8 @@ the target Solution if they exist in other Solutions on the target org, or
 (b) deleted if they exist in target solution only and nowhere else.
 
 If specified in config, entities with rootcomponentbehaviors of 0 will be
-changed to 1.
-
-This effectively Syncs the two solutions, cleaning 'rogue' SolutionComponents from
-the target org.
+changed to 1. This effectively Syncs the target solution with source solution, cleaning
+'rogue' SolutionComponents from the target org.
 
 ## PARAMETERS
 

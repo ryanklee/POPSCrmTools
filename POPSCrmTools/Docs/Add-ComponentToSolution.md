@@ -19,15 +19,7 @@ Add-ComponentToSolution [[-Component] <SolutionComponent[]>] [[-SolutionName] <S
 
 ## DESCRIPTION
 Adds SolutionComponent(s) to Dynamics Crm Solution.
-Only supports SolutionComponents
-with rootcomponentbehavior of 1 or 2.
-
-## EXAMPLES
-
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
-```
+Only supports SolutionComponents with rootcomponentbehavior of 1 or 2.
 
 ## PARAMETERS
 

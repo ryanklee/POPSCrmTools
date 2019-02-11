@@ -16,9 +16,6 @@ Deletes SolutionComponents from a Dynamics Crm org.
 Remove-SolutionComponentFromCrm [[-ObjectId] <Array>] [[-Conn] <CrmServiceClient>] [<CommonParameters>]
 ```
 
-## DESCRIPTION
-{{Fill in the Description}}
-
 ## PARAMETERS
 
 ### -ObjectId

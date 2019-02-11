@@ -19,8 +19,7 @@ Get-CrmSolutionComponentComparison [[-ReferenceComponent] <SolutionComponent[]>]
 
 ## DESCRIPTION
 # Gets a list of components unique to ReferenceComponent.
-Compares only on the ObjectId and RootComponentBehavior
-# properties.
+# Compares only on the ObjectId and RootComponentBehavior properties.
 
 ## PARAMETERS
 
@@ -60,4 +59,4 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## OUTPUTS
 
-### -Array of objects of type SolutionComponent. Objects include SideIndicator properties added by Compare-Object
+### - Array containing objects of type SolutionComponent. (Array Objects also include SideIndicator property added by Compare-Object.)

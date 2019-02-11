@@ -17,9 +17,6 @@ Remove-CrmEntityFromSolution [[-Conn] <CrmServiceClient>] [[-EntityName] <String
  [<CommonParameters>]
 ```
 
-## DESCRIPTION
-{{Fill in the Description}}
-
 ## PARAMETERS
 
 ### -Conn
