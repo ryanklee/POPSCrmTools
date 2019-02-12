@@ -16,7 +16,7 @@ Function Update-RootComponentBehavior {
         Write-Verbose ('Updating component behavior for {0}' -f $component.ObjectId)
         $entityName = $metadata[$component.ObjectId].LogicalName
         Remove-CrmEntityFromSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
-        Add-CrmEntityToSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
+        Add-CrmEntityToSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName -IncludeSubComponentSet 'Custom'
         $updatedRootComponents += $Component
     }
 

@@ -94,7 +94,7 @@ Function New-CrmSolutionFromSource {
 
     if ($fixRootComponentBehavior){
         [SolutionComponent[]]$components["PreUpdateSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
-        $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn -IncludeSubComponentSet 'Custom'
+        $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn 
     }
 
     [SolutionComponent[]]$components["Source"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
