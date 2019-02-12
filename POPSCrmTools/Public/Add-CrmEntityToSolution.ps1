@@ -13,13 +13,12 @@ Function Add-CrmEntityToSolution {
         # UniqueName of Solution
         [String]$SolutionName,
         # Include Entity Metadata. Default is false.
-        [Switch]$IncludeMetadata = $false
+        [Switch]$IncludeMetadata = $false,
         # SubComponents to include 
-        # [ValidateSet("None","All","Custom")]
-        # [String]$IncludeSubComponentSet = "None"
+        [ValidateSet("None","All","Custom")]
+        [String]$IncludeSubComponentSet = "None"
     )
 
-    $IncludeSubComponentSet = "None"
     $Metadata = (Get-CrmEntityMetadata -EntityLogicalName $EntityName -conn $Conn -EntityFilters Attributes);
     $ObjectTypeCode = $Metadata.ObjectTypeCode;
     $EntityMetadataId = $Metadata.MetadataId;
