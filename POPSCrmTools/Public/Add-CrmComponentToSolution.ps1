@@ -1,8 +1,20 @@
-Function Add-ComponentToSolution {
+Function Add-CrmComponentToSolution {
+    <#
+        .SYNOPSIS
+            Adds SolutionComponent(s) to a Dynamics Crm Solution
+        
+        .DESCRIPTION
+            Adds SolutionComponent(s) to Dynamics Crm Solution. Only supports SolutionComponents
+            with rootcomponentbehavior of 1 or 2.
+    #>
+    [cmdletbinding()]
     Param
     (
+        # SolutionComponent(s) to be added to the Solution
         [SolutionComponent[]]$Component,
+        # UniqueName of Solution
         [String]$SolutionName,
+        # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn
     )
 

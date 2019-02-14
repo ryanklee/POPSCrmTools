@@ -11,12 +11,12 @@ Function Remove-Components{
     $removal = @{}
 
     if ($remove) {
-        Remove-ComponentFromSolution -Component $remove -SolutionName $solutionName -Conn $conn
+        Remove-CrmComponentFromSolution -Component $remove -SolutionName $solutionName -Conn $conn
         $removal["Removed"] = $remove
     }
 
     if ($delete) {
-        Remove-ComponentFromCrm -Component $delete -Conn $conn 
+        Remove-SolutionComponentFromCrm -Component $delete -Conn $conn 
         $removal["Deleted"] = $delete
     }
     

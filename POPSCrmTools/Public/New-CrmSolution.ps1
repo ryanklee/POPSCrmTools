@@ -1,9 +1,17 @@
-
-Function New-CrmTemplateSolution {
+Function New-CrmSolution {
+    <#
+        .SYNOPSIS
+            Creates a new solution on a Dynamics crm org.
+    #>
+    [cmdletbinding()]
     Param 
     (
+        # UniqueName of solution
         [string]$SolutionName,
+        # Publisher info
+        # Requires entries: 'uniquename', 'friendlyname', 'publisherid', 'version'
         [hashtable]$Publisher,
+        # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
     )
 

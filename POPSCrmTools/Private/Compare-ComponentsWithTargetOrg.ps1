@@ -24,7 +24,7 @@ Function Compare-ComponentsWithTargetOrg {
         Where-Object -Filter {($invalidAttributeIds -notcontains $_.ObjectId)} 
     
     $validNonentities = $validNonentitiesGoodIds |
-        Where-Object -Filter {(Test-CrmComponentExists $_.ObjectId $conn)}
+        Where-Object -Filter {(Test-CrmSolutionComponentExists $_.ObjectId $conn)}
 
     Write-Verbose "Identifying invalid Nonentities..."
     if($validNonentities){

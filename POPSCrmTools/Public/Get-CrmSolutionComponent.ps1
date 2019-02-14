@@ -1,7 +1,14 @@
 Function Get-CrmSolutionComponent {
+    <#
+        .SYNOPSIS
+            Gets all SolutionComponents in a Solution on a Dynamics crm org
+    #>
+    [cmdletbinding()]
     Param
     (
+        # Dynamics crm connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn,
+        # UniqueName of Solution
         [string]$solutionName
     )
 
@@ -16,8 +23,6 @@ Function Get-CrmSolutionComponent {
         </fetch>
 "@
 
-    $orgName = $conn.ConnectedOrgUniqueName
-
     try {
         Write-Verbose ("Getting components from {0} on {1}..." -f $solutionName, $conn.ConnectedOrgUniqueName)
         $result = Get-CrmRecordsByFetch -Conn $conn -Fetch $query -AllRows -ErrorAction Stop -WarningAction SilentlyContinue
@@ -29,7 +34,7 @@ Function Get-CrmSolutionComponent {
     }
     [SolutionComponent[]]$components = @()
     foreach ($record in $result.CrmRecords){
-        $Components += (Set-SolutionComponent -Record $record)
+        $Components += (Set-CrmSolutionComponent -Record $record)
     }
     Write-Output $Components  
 }

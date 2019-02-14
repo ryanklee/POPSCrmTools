@@ -1,7 +1,17 @@
 Function Test-CrmSolutionExists {
+    <#
+        .SYNOPSIS
+            Tests whether a solution exists on a Dynamics Crm Org.
+
+        .OUTPUTS
+            'True' if the solution exists. 'False' if the solution does not exist.
+    #>
+    [cmdletbinding()]
     Param
     (
+        # Dynamics 365 Crm Connection
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn,
+        # Unique Name of Solution
         [string]$SolutionName
     )
 

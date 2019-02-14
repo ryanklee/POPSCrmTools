@@ -1,6 +1,19 @@
-Function Set-SolutionComponent {
+Function Set-CrmSolutionComponent {
+    <#
+        .SYNOPSIS
+            Builds a SolutionComponent object from a single fetch record entry.
+
+        .DESCRIPTION
+            Builds an object of type SolutionComponent. All properties of the object are set according to
+            the provided fetchxml entry. The fetch result should contain all SolutionComponent attributes. 
+
+        .OUTPUTS
+            Object of type SolutionComponent.
+    #>
+    [cmdletbinding()]
     Param
     (
+        #Single record entry from fetch for SolutionComponent.
         [PSCustomObject]$Record
     )
 

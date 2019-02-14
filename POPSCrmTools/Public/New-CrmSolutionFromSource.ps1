@@ -1,4 +1,40 @@
 Function New-CrmSolutionFromSource {
+    <#
+        .SYNOPSIS
+            Builds a Solution in a Dynamics Crm org based on a source solution
+            in another org.
+    
+        .DESCRIPTION
+            Builds a Solution in a Dynamics Crm org based on a source solution
+            in another org.
+
+            Necessary parameters read from config file. File can be generated
+            using the '-GenerateConfig' switch -- this will prompt you for 
+            the required paramaters -- or via the 'New-CrmSolutionFromSourceConfig' cmdlet.
+
+            If Solution does not already exist on target, it will be created. If publisher
+            does not already exist on target, it will be created. All publisher info and 
+            solution name are assumed to be the same on source and target.
+
+            WARNING: If the target Solution exists and contains SolutionComponents, any
+            SolutionComponents not in source Solution will either (a) be removed from
+            the target Solution if they exist in other Solutions on the target org, or
+            (b) deleted if they exist in target solution only and nowhere else.
+
+            If specified in config, entities with rootcomponentbehaviors of 0 will be
+            changed to 1.
+
+            This effectively Syncs the two solutions, cleaning 'rogue' SolutionComponents from
+            the target org.
+
+        .OUTPUTS
+            -Solution on target Dynamics Crm Org.
+
+            -'Errorlog.txt', if errors encountered.
+
+            -'BuildCrmSolutionLog.json', contains useful information about SolutionComponents
+             manipulated by the cmdlet. This includes those Added, Skipped, and comparison results.
+    #>
     [cmdletbinding()]
     Param 
     (
@@ -10,7 +46,7 @@ Function New-CrmSolutionFromSource {
         [securestring]$Password,
         [Parameter(Mandatory=$true)]
         [string]$ConfigFilePath,
-        [bool]$GenerateConfig = $false
+        [switch]$GenerateConfig = $false
     )
     
     if ($GenerateConfig){
@@ -52,13 +88,13 @@ Function New-CrmSolutionFromSource {
     }    
     
     if (-Not $targetSolutionExists) {
-        New-CrmTemplateSolution -SolutionName $solutionName -Publisher $publisher -Conn $targetConn
+        New-CrmSolution -SolutionName $solutionName -Publisher $publisher -Conn $targetConn
         $log["TemplateCreaded"] = $true 
     }   
 
     if ($fixRootComponentBehavior){
         [SolutionComponent[]]$components["PreUpdateSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
-        $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn
+        $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn 
     }
 
     [SolutionComponent[]]$components["Source"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName

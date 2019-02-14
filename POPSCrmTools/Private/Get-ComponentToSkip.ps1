@@ -7,7 +7,7 @@ Function Get-ComponentToSkip {
     $skip = @{}
     
     [SolutionComponent[]]$skip["NotInTargetCrm"] = $component | 
-        Where-Object -Filter {-Not (Test-CrmComponentExists $_.objectid $Conn)}
+        Where-Object -Filter {-Not (Test-CrmSolutionComponentExists $_.objectid $Conn)}
         
     [SolutionComponent[]]$skip["BadRootComponentBehavior"] = $component | 
         Where-Object -Property ComponentType -EQ 1 | 
