@@ -16,7 +16,6 @@ Function Add-CrmEntityToSolution {
         [Parameter(Mandatory = $true)]
         [String]$SolutionName,
         # Include Entity Metadata. Default is false.
-        [Parameter(Mandatory = $true)]
         [Switch]$IncludeMetadata = $false,
         # SubComponents to include 
         [Parameter(Mandatory = $false)]
