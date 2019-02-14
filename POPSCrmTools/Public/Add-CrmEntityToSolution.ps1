@@ -1,13 +1,30 @@
 Function Add-CrmEntityToSolution {
+    <#
+        .SYNOPSIS
+            Adds an Entity to a Dynamics Crm Solution.
+    #>
     [cmdletbinding()]
     Param
     (
+        # Dynamics Crm connection.
+        [Parameter(Mandatory = $true)]
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient] $Conn,
-        [String]                                           $EntityName,
-        [String]                                           $SolutionName,
-        [Switch]                                           $IncludeMetadata = $false,
-        [ValidateSet("None","All","Custom")][String]       $IncludeSubComponentSet = "None",
-		[System.Array]                                     $EntityMetadata = @()
+        # LogicalName of Entity
+        [Parameter(Mandatory = $true)]
+        [String]$EntityName,
+        # UniqueName of Solution
+        [Parameter(Mandatory = $true)]
+        [String]$SolutionName,
+        # Include Entity Metadata. Default is false.
+        [Parameter(Mandatory = $true)]
+        [Switch]$IncludeMetadata = $false,
+        # SubComponents to include 
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("None","All","Custom")]
+        [String]$IncludeSubComponentSet = "None",
+        # Metadata for entity. Can be supplied in case of cache conflicts.
+        [Parameter(Mandatory = $false)]
+		[System.Array]$EntityMetadata = @()
     )
 
 	# If this is called in a loop, provide ConnMetadata from parent function. There is a bug in how the Metadata is stored globally which will cause threading data issues.
