@@ -1,4 +1,3 @@
-
 Function Update-RootComponentBehavior {
     Param
     (
@@ -10,13 +9,13 @@ Function Update-RootComponentBehavior {
     $entities = $Component | Where-Object -Property ComponentType -EQ 1
     $badRootComponents = $entities | Where-Object -Property rootcomponentbehavior -EQ 0 
     $updatedRootComponents = @()
-    $metadata = Get-CrmEntityAllMetadata -Conn $Conn | Select-Object -Property MetadataId, LogicalName | MetadataToHash
+    $metadata = Get-CrmEntityAllMetadata -Conn $Conn -EntityFilters Attributes | MetadataToHash
 
     Foreach ($component in $badRootComponents){
-        Write-Verbose ('Updating component behavior for {0}' -f $component.ObjectId)
-        $entityName = $metadata[$component.ObjectId].LogicalName
+		$entityName = $metadata[$component.ObjectId].LogicalName;
+        Write-Verbose ('Updating component behavior for {0}:{1}' -f $component.ObjectId, $entityName);        
         Remove-CrmEntityFromSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName
-        Add-CrmEntityToSolution -EntityName $entityName -Conn $conn -SolutionName $SolutionName -IncludeSubComponentSet 'Custom'
+        Add-CrmEntityToSolution -EntityName $entityName -EntityMetadata $metadata[$component.ObjectId] -Conn $conn -SolutionName $SolutionName -IncludeSubComponentSet 'Custom'
         $updatedRootComponents += $Component
     }
 

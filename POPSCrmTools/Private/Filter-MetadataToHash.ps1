@@ -1,8 +1,13 @@
-Filter MetadataToHash
+Filter RetrieveFetchResults
 {
-	begin { $hash = @{} }
+	param
+	(
+		[Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
+	)
+
+	begin { $results = @(); }
 	process { 
-        $hash[$_.Metadataid] = $_ 
+        $results = (Get-CrmRecordsByFetch -Fetch ($_) -conn $Conn -AllRows).CrmRecords;
     }
-	end { return $hash }
+	end { return $results; }
 }

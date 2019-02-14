@@ -1,4 +1,4 @@
-Function Add-ComponentToSolution {
+Function Add-CrmComponentToSolution {
     <#
         .SYNOPSIS
             Adds SolutionComponent(s) to a Dynamics Crm Solution
