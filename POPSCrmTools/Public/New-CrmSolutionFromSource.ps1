@@ -38,20 +38,34 @@ Function New-CrmSolutionFromSource {
     [cmdletbinding()]
     Param 
     (
+        #Credentials for Source environment
         [Parameter(ParameterSetName='Cred')]
-        [pscredential]$Credential,
+        [pscredential]$SourceCredential,
+
+        #Credentials for Target environment
+        [Parameter(ParameterSetName='Cred')]
+        [pscredential]$TargetCredential,
+
+        #Username for Source environment
         [Parameter(ParameterSetName='DiscreteCreds', Mandatory=$true)]
-        [string]$UserName,
+        [string]$SourceUsername,
+
+        #Password for Source environment
         [Parameter(ParameterSetName='DiscreteCreds', Mandatory=$true)]
-        [securestring]$Password,
+        [securestring]$SourcePassword,
+
+        #Username for Target environment
+        [Parameter(ParameterSetName='DiscreteCreds', Mandatory=$true)]
+        [string]$TargetUsername,
+
+        #Password for Target environment
+        [Parameter(ParameterSetName='DiscreteCreds', Mandatory=$true)]
+        [securestring]$TargetPassword,
+
+        #Path to existing config file
         [Parameter(Mandatory=$true)]
-        [string]$ConfigFilePath,
-        [switch]$GenerateConfig = $false
+        [string]$ConfigFilePath
     )
-    
-    if ($GenerateConfig){
-        New-CrmSolutionFromSourceConfig -FileName $ConfigFilePath
-    }
 
     try {
         $config = Import-PowerShellDataFile $PWD/$ConfigFilePath
@@ -71,11 +85,11 @@ Function New-CrmSolutionFromSource {
     $log = @{}
     
     if ($PSBoundParameters.ContainsKey('Password')){
-        $sourceConn = Get-CrmConnection -UserName $UserName -Password $Password -Url "https://$sourceOrg.crm.dynamics.com" 
-        $targetConn = Get-CrmConnection -UserName $UserName -Password $Password -Url "https://$targetOrg.crm.dynamics.com"
+        $sourceConn = Get-CrmConnection -Username $SourceUsername -Password $Password -Url "https://$sourceOrg.crm.dynamics.com" 
+        $targetConn = Get-CrmConnection -Username $TargetUsername -Password $Password -Url "https://$targetOrg.crm.dynamics.com"
     } else {
-        $sourceConn = Get-CrmConnection -Cred $credential -Url "https://$sourceOrg.crm.dynamics.com" 
-        $targetConn = Get-CrmConnection -Cred $credential -Url "https://$targetOrg.crm.dynamics.com"
+        $sourceConn = Get-CrmConnection -Cred $SourceCredential -Url "https://$sourceOrg.crm.dynamics.com" 
+        $targetConn = Get-CrmConnection -Cred $TargetCredential -Url "https://$targetOrg.crm.dynamics.com"
     }
     
     $sourceSolutionExists = Test-CrmSolutionExists -Conn $sourceConn -SolutionName $solutionName
