@@ -1,4 +1,4 @@
-Function New-CrmSolutionFromSource {
+Function Sync-CrmSolutionFromSource {
     <#
         .SYNOPSIS
             Builds a Solution in a Dynamics Crm org based on a source solution
@@ -84,9 +84,9 @@ Function New-CrmSolutionFromSource {
     $components = @{}
     $log = @{}
     
-    if ($PSBoundParameters.ContainsKey('Password')){
-        $sourceConn = Get-CrmConnection -Username $SourceUsername -Password $Password -Url "https://$sourceOrg.crm.dynamics.com" 
-        $targetConn = Get-CrmConnection -Username $TargetUsername -Password $Password -Url "https://$targetOrg.crm.dynamics.com"
+    if ($PSBoundParameters.ContainsKey('SourcePassword')){
+        $sourceConn = Get-CrmConnection -Username $SourceUsername -Password $SourcePassword -Url "https://$sourceOrg.crm.dynamics.com" 
+        $targetConn = Get-CrmConnection -Username $TargetUsername -Password $TargetPassword -Url "https://$targetOrg.crm.dynamics.com"
     } else {
         $sourceConn = Get-CrmConnection -Cred $SourceCredential -Url "https://$sourceOrg.crm.dynamics.com" 
         $targetConn = Get-CrmConnection -Cred $TargetCredential -Url "https://$targetOrg.crm.dynamics.com"
@@ -107,30 +107,46 @@ Function New-CrmSolutionFromSource {
     }   
 
     if ($fixRootComponentBehavior){
-        [SolutionComponent[]]$components["PreUpdateSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
+        $components["PreUpdateSource"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
         $components["RootComponentBehaviorUpdated"] = Update-RootComponentBehavior -Component $components.PreUpdateSource -SolutionName $solutionName -Conn $sourceConn 
     }
 
-    [SolutionComponent[]]$components["Source"] = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName
-    [SolutionComponent[]]$components["Target"] = Get-CrmSolutionComponent -Conn $targetConn -SolutionName $solutionName
-    
-    if ($components.Source -and
-        $components.Target) {
-        [SolutionComponent[]]$components["SourceOnly"] = Get-CrmSolutionComponentComparison -ReferenceComponent $components.Source -DifferenceComponent $components.Target
-        [SolutionComponent[]]$components["TargetOnly"] = Get-CrmSolutionComponentComparison -ReferenceComponent $components.Target -DifferenceComponent $components.Source
+    $components["Source"] = @{"Original" = Get-CrmSolutionComponent -Conn $sourceConn -SolutionName $solutionName} 
+    $components["Target"] = @{"Original" = Get-CrmSolutionComponent -Conn $targetConn -SolutionName $solutionName}
+
+    Write-Verbose 'Pulling down metadata...'
+    $metadata = @{
+        "Source" = Get-CrmEntityAllMetadata -Conn $sourceConn -EntityFilters All | MetadataToHash;
+        "Target" = Get-CrmEntityAllMetadata -Conn $targetConn -EntityFilters All | MetadataToHash
     }
-    
-    if ($components.SourceOnly) { 
-        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.SourceOnly -Conn $targetConn
+    Write-Verbose 'Updating source components against metadata...'
+    $components.Source["Updated"] = Update-ComponentAgainstMetadata -SolutionComponent $components.Source.Original -MetadataSource $metadata.source -MetadataTarget $metadata.target -SourceConn $sourceConn -TargetConn $targetConn
+
+    if ($components.Source.Updated -and 
+        $components.Target.Original) {
+        [SolutionComponent[]]$components.Source["SourceOnly"] = Compare-CrmSolutionComponent -ReferenceComponent $components.Source.Updated -DifferenceComponent $components.Target.Original
+        [SolutionComponent[]]$components.Target["TargetOnly"] = Compare-CrmSolutionComponent -ReferenceComponent $components.Target.Original -DifferenceComponent $components.Source.Updated
+    }
+
+    if ($components.Source.SourceOnly) { 
+        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.Source.SourceOnly -Metadata $metadata -SourceConn $SourceConn -TargetConn $targetConn
     } else {
-        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.Source -Conn $targetConn
+        $components["Manifest"] = Compare-ComponentsWithTargetOrg -Component $components.Source.Updated -Metadata $metadata -SourceConn $SourceConn -TargetConn $targetConn
     }
     
+    # $components.Manifest["Removals"] = $components.Target.TargetOnly
+
     Write-ManifestOut -Manifest $components.Manifest
     
+    <# if ($components.Manifest.Removals){
+        Remove-Component -Component $components.Manifest.Removals -Conn $targetConn -SolutionName $solutionName | Out-Null
+    } #>
+
     if ($components.Manifest.Add) {
         Add-Component -Conn $targetConn -Component $components.Manifest.Add -SolutionName $solutionName
     }
+
+    
     
     $log["Timestamp"] = (Get-Date -Format o)
     $log["Config"] = $config

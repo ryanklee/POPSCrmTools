@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-CrmSolutionComponentComparison
+# Compare-CrmSolutionComponent
 
 ## SYNOPSIS
 # Gets a list of components unique to ReferenceComponent.
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-CrmSolutionComponentComparison [[-ReferenceComponent] <SolutionComponent[]>]
+Compare-CrmSolutionComponent [[-ReferenceComponent] <SolutionComponent[]>]
  [[-DifferenceComponent] <SolutionComponent[]>] [<CommonParameters>]
 ```
 

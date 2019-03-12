@@ -5,28 +5,28 @@ online version:
 schema: 2.0.0
 ---
 
-# New-CrmSolutionFromSource
+# Sync-CrmSolutionFromSource
 
 ## SYNOPSIS
-Builds a Solution in a Dynamics Crm org based on a source solution
+Syncs a Solution in a Dynamics Crm org based on a source solution
 in another org.
 
 ## SYNTAX
 
 ### Cred
 ```
-New-CrmSolutionFromSource [-Credential <PSCredential>] -ConfigFilePath <String> [-GenerateConfig]
+Sync-CrmSolutionFromSource [-Credential <PSCredential>] -ConfigFilePath <String> [-GenerateConfig]
  [<CommonParameters>]
 ```
 
 ### DiscreteCreds
 ```
-New-CrmSolutionFromSource -UserName <String> -Password <SecureString> -ConfigFilePath <String>
+Sync-CrmSolutionFromSource -UserName <String> -Password <SecureString> -ConfigFilePath <String>
  [-GenerateConfig] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Builds a Solution in a Dynamics Crm org based on a source solution in another org.
+Syncs a Solution in a Dynamics Crm org based on a source solution in another org.
 
 Necessary parameters read from config file.
 

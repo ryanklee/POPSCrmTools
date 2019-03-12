@@ -1,4 +1,4 @@
-Function New-CrmSolutionFromSourceConfig {
+Function Sync-CrmSolutionFromSourceConfig {
     <#
         .SYNOPSIS
             Generates config file for 'New-CrmSolutionFromSource'

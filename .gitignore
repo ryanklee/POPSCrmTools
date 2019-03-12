@@ -3,3 +3,7 @@
 Refresh.ps1
 BuildCrmSolutionLog.json
 CrmSolutionFromSourceConfig.psd1
+.vs/POPSCrmTools/v15/.suo
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+config.psd1

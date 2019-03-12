@@ -20,4 +20,13 @@ class SolutionComponent
 
     [guid]
     $SolutionComponentId
+
+    [guid]
+    $RootSolutionComponentId
+
+    [guid]
+    $SolutionId
+
+    [guid]
+    $OriginalObjectId
 }

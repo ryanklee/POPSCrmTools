@@ -5,7 +5,7 @@ Function Update-RootComponentBehavior {
         [string]$SolutionName,
         [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
     )
-    Write-Verbose "Updating RootComponentBehaviors to not include all subcomponents..."
+    Write-Verbose "Updating RootComponentBehaviors..."
     $entities = $Component | Where-Object -Property ComponentType -EQ 1
     $badRootComponents = $entities | Where-Object -Property rootcomponentbehavior -EQ 0 
     $updatedRootComponents = @()

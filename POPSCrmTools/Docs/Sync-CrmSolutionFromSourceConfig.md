@@ -13,15 +13,15 @@ Generates config file for 'New-CrmSolutionFromSource'
 ## SYNTAX
 
 ```
-New-CrmSolutionFromSourceConfig [-FileName] <String> [-SourceOrg] <String> [-TargetOrg] <String>
+Sync-CrmSolutionFromSourceConfig [-FileName] <String> [-SourceOrg] <String> [-TargetOrg] <String>
  [-SolutionName] <String> [-FixRootComponentBehavior] <Boolean> [-PubName] <String> [-PubDisplayName] <String>
  [-PubPrefix] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Generates config file for 'New-CrmSolutionFromSource'.
-Assumes
-that all publisher info and solution name are the same for source
+Generates config file for 'Sync-CrmSolutionFromSource'.
+
+Assumes that all publisher info and solution name are the same for source
 and target.
 
 ## PARAMETERS

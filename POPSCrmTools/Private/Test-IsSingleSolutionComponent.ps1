@@ -19,7 +19,7 @@ Function Test-IsSingleSolutionComponent {
 "@
 
     try {
-        $result = Get-CrmRecordsByFetch -Conn $conn -Fetch $query -AllRows -ErrorAction Stop -WarningAction SilentlyContinue
+        $result = Get-CrmRecordsByFetch -Conn $conn -Fetch $query -ErrorAction Stop -WarningAction SilentlyContinue
     }
     catch { 
         $err = $_.Exception.Message
