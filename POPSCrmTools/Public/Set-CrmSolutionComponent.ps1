@@ -26,5 +26,9 @@ Function Set-CrmSolutionComponent {
     $component.ObjectId = $record.objectid
     $component.RootComponentBehavior = $record.rootcomponentbehavior_Property.Value.Value 
     $component.SolutionComponentId = $record.solutioncomponentid
+    if ($record.rootsolutioncomponentid){
+        $component.RootSolutionComponentId = $record.rootsolutioncomponentid
+    }
+    $component.SolutionId = $record.solutionid_Property.Value.Id
     Write-Output $component
 }

@@ -9,14 +9,11 @@ Function Test-CrmSolutionComponentExists {
     [cmdletbinding()]
     Param
     (
-        # ObjectId of SolutionComponent
-        [parameter(Position = 0)]
-        [guid]$ObjectId,
-        # Dynamics 365 Crm Connection
-        [parameter(Position = 1)]
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$conn
+        [SolutionComponent]$SolutionComponent,
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
     )
 
+    $ObjectId = $SolutionComponent.ObjectId
     $query = @"
         <fetch>
             <entity name="solutioncomponent" >
@@ -29,16 +26,16 @@ Function Test-CrmSolutionComponentExists {
 "@
 
     try {
-        $result = Get-CrmRecordsByFetch -Conn $conn -Fetch $query -ErrorAction Stop -WarningAction SilentlyContinue
+        $result = Get-CrmRecordsByFetch -Conn $Conn -Fetch $query -ErrorAction Stop -WarningAction SilentlyContinue
     }
     catch { 
         $err = $_.Exception.Message
         throw $err
-    }   
-
+    }
+    
     if ($result.CrmRecords.count -eq 0) {
-       Write-Output $false
+        Write-Output $false
     } else {
-       Write-Output $true  
+        Write-Output $true 
     }
 }

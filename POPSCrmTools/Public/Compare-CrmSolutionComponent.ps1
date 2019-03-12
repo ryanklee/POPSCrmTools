@@ -1,4 +1,4 @@
-Function Get-CrmSolutionComponentComparison {
+Function Compare-CrmSolutionComponent {
     <#
         .SYNOPSIS
         # Gets a list of components unique to ReferenceComponent.
@@ -19,7 +19,7 @@ Function Get-CrmSolutionComponentComparison {
         [SolutionComponent[]]$DifferenceComponent
     )
 
-    $relativeComplement = Compare-Object $ReferenceComponent $DifferenceComponent -Property ObjectId, RootComponentBehavior -PassThru | 
+    $relativeComplement = Compare-Object -ReferenceObject $ReferenceComponent -DifferenceObject $DifferenceComponent -Property ObjectId, RootComponentBehavior -PassThru | 
         Where-Object SideIndicator -eq '<='
         
     Write-Output $relativeComplement    

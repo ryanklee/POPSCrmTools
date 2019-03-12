@@ -15,7 +15,6 @@ Function Get-CrmSolutionComponent {
     $query = @"
         <fetch>
             <entity name="solutioncomponent" >
-                <all-attributes/> 
                 <filter>
                     <condition attribute="solutionidname" operator="eq" value="$solutionName" />
                 </filter>

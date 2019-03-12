@@ -1,19 +1,22 @@
 
-Function Get-ComponentSortedOnExistence { 
+Function Get-ComponentSortedByExistence { 
     Param
     (
         [SolutionComponent[]]$Component,
-        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$Conn
+        [Microsoft.Xrm.Tooling.Connector.CrmServiceClient]$TargetConn
     )
 
+    $Components = $Component
+
     Write-Verbose 'Testing source components exist in target crm...'
-    [SolutionComponent[]]$existing = @();
+    [SolutionComponent[]]$existing = @()
     [SolutionComponent[]]$nonexisting = @()
-    foreach ($component in $Component){
-        if (Test-CrmSolutionComponentExists $component.ObjectId $Conn){
-            $existing += $component
+    foreach ($comp in $Components){
+        if (Test-CrmSolutionComponentExists -SolutionComponent $comp -Conn $Conn){
+
+            $existing += $comp
         } else {
-            $nonexisting += $component
+            $nonexisting += $comp
         }
     }
 

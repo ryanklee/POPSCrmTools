@@ -28,7 +28,7 @@ Function Remove-CrmComponentFromSolution {
         catch {
             $err = $_.Exception.Message
             ("{0} {1}" -f $request, $err) | Out-File -Append errorlog.txt 
-            throw $err
+            Write-Verbose $err
         }
     }
 }
